@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-var ipinfoURI = "http://ipinfo.io"
+var ipinfoURI = "https://ipinfo.io"
 
 // IPInfo wraps json response
 type IPInfo struct {
@@ -23,18 +23,23 @@ type IPInfo struct {
 }
 
 // MyIP provides information about the public IP address of the client.
-func MyIP() (*IPInfo, error) {
-	return getInfo(fmt.Sprintf("%s/json", ipinfoURI))
+func MyIP(token ...string) (*IPInfo, error) {
+	return getInfo(fmt.Sprintf("%s/json", ipinfoURI), token)
 }
 
 // ForeignIP provides information about the given IP address (IPv4 or IPv6)
-func ForeignIP(ip string) (*IPInfo, error) {
-	return getInfo(fmt.Sprintf("%s/%s/json", ipinfoURI, ip))
+func ForeignIP(ip string, token ...string) (*IPInfo, error) {
+	return getInfo(fmt.Sprintf("%s/%s/json", ipinfoURI, ip), token)
 }
 
 // Undercover code that makes the real call to the webservice
-func getInfo(url string) (*IPInfo, error) {
-	response, err := http.Get(url)
+func getInfo(url string, token []string) (*IPInfo, error) {
+	tokenValue := ""
+	if len(token) == 1 {
+		tokenValue = fmt.Sprintf("?token=%s", token[0])
+	}
+
+	response, err := http.Get(url + tokenValue)
 	if err != nil {
 		return nil, err
 	}
