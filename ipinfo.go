@@ -12,14 +12,15 @@ var ipinfoURI = "https://ipinfo.io"
 
 // IPInfo wraps json response
 type IPInfo struct {
-	IP       string `json:"ip"`
-	Hostname string `json:"hostname"`
-	City     string `json:"city"`
-	Region   string `json:"region"`
-	Country  string `json:"country"`
-	Loc      string `json:"loc"`
-	Org      string `json:"org"`
-	Postal   string `json:"postal"`
+	IP       string            `json:"ip"`
+	Hostname string            `json:"hostname"`
+	City     string            `json:"city"`
+	Region   string            `json:"region"`
+	Country  string            `json:"country"`
+	Loc      string            `json:"loc"`
+	Org      string            `json:"org"`
+	Postal   string            `json:"postal"`
+	Company  map[string]string `json:"company"`
 }
 
 // MyIP provides information about the public IP address of the client.
